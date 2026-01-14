@@ -78,7 +78,7 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.pr
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
-/*
+/* 
 |--------------------------------------------------------------------------
 | ADMIN PANEL (SUPER ADMIN / KASIR)
 |--------------------------------------------------------------------------
