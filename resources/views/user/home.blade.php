@@ -12,7 +12,7 @@
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
         <!-- LOGO -->
-        <h1 class="text-2xl font-bold">WarungHub</h1>
+        <a href="/home" class="text-2xl font-bold">WarungHub</a>
 
         <!-- SEARCH -->
         <div class="flex w-1/2">
@@ -32,7 +32,6 @@
                     {{ collect(session('cart'))->sum('qty') }}
                 </span>
             </div>
-
 
             <a href="/login" class="hover:underline">Masuk</a>
             <a href="/register" class="bg-white text-green-600 px-4 py-2 rounded hover:bg-gray-100">
@@ -71,34 +70,46 @@
 <div class="max-w-7xl mx-auto px-6 mt-10">
     <h2 class="text-xl font-bold mb-4">Produk Terlaris</h2>
 
+    @php
+    $products = [
+        ['name'=>'Beras Ramos 5kg','price'=>75000,'img'=>'rice'],
+        ['name'=>'Minyak Goreng 2L','price'=>38000,'img'=>'oil'],
+        ['name'=>'Telur Ayam 1kg','price'=>29000,'img'=>'egg'],
+        ['name'=>'Gula Pasir 1kg','price'=>15000,'img'=>'sugar'],
+        ['name'=>'Mie Instan','price'=>3000,'img'=>'noodles'],
+        ['name'=>'Gas LPG 3kg','price'=>21000,'img'=>'gas'],
+        ['name'=>'Tepung Terigu','price'=>12000,'img'=>'flour'],
+        ['name'=>'Susu Kaleng','price'=>13000,'img'=>'milk'],
+    ];
+    @endphp
+
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-
-        @php
-        $products = [
-            ['name'=>'Beras Ramos 5kg','price'=>75000,'img'=>'rice'],
-            ['name'=>'Minyak Goreng 2L','price'=>38000,'img'=>'oil'],
-            ['name'=>'Telur Ayam 1kg','price'=>29000,'img'=>'egg'],
-            ['name'=>'Gula Pasir 1kg','price'=>15000,'img'=>'sugar'],
-            ['name'=>'Mie Instan','price'=>3000,'img'=>'noodles'],
-            ['name'=>'Gas LPG 3kg','price'=>21000,'img'=>'gas'],
-            ['name'=>'Tepung Terigu','price'=>12000,'img'=>'flour'],
-            ['name'=>'Susu Kaleng','price'=>13000,'img'=>'milk'],
-        ];
-        @endphp
-
         @foreach($products as $p)
-        <div class="bg-white rounded-lg shadow hover:shadow-lg">
-            <img src="https://source.unsplash.com/300x300/?{{ $p['img'] }}" class="rounded-t-lg">
+        <div class="bg-white rounded-lg shadow hover:shadow-lg overflow-hidden">
+
+            <a href="/product/{{ urlencode($p['name']) }}">
+                <img src="https://source.unsplash.com/300x300/?{{ $p['img'] }}"
+                     class="w-full h-48 object-cover">
+            </a>
+
             <div class="p-4">
-                <h3 class="font-semibold">{{ $p['name'] }}</h3>
-                <p class="text-green-600 font-bold">Rp {{ number_format($p['price']) }}</p>
-                <button class="mt-2 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+                <a href="/product/{{ urlencode($p['name']) }}">
+                    <h3 class="font-semibold hover:text-green-600">
+                        {{ $p['name'] }}
+                    </h3>
+                </a>
+
+                <p class="text-green-600 font-bold mt-1">
+                    Rp {{ number_format($p['price']) }}
+                </p>
+
+                <button onclick="addToCart('{{ $p['name'] }}', {{ $p['price'] }})"
+                    class="mt-3 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
                     Tambah ke Keranjang
                 </button>
             </div>
         </div>
         @endforeach
-
     </div>
 </div>
 
@@ -106,9 +117,6 @@
 <div class="bg-white mt-16 py-6 text-center text-gray-500">
     © 2026 WarungHub — Marketplace Sembako Digital
 </div>
-
-</body>
-</html>
 
 <script>
 function addToCart(name, price) {
@@ -130,3 +138,6 @@ function addToCart(name, price) {
     });
 }
 </script>
+
+</body>
+</html>
