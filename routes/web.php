@@ -89,6 +89,7 @@ Route::prefix('admin')
     ->name('admin.')
     ->group(function () {
     Route::get('/admin/dashboard', [ControllersAdminDashboardController::class, 'index']);
+    Route::get('/admin/categories', [ControllersAdminDashboardController::class, 'categories'])->name('categories.index');
 
     Route::get('/dashboard', [ControllersAdminDashboardController::class,'index'])->name('dashboard');
 
